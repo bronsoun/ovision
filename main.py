@@ -10,8 +10,10 @@ def index():
     return render_template('index.html')
 
 def gen(camera):
+    prev_frame_time = 0
+    new_frame_time = 0
     while True:
-        frame = camera.get_frame()
+        frame, prev_frame_time = camera.get_frame(prev_frame_time)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
